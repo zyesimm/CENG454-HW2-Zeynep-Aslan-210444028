@@ -11,6 +11,8 @@ public class FlightController : MonoBehaviour
     [SerializeField] private float pitchSpeed = 45f;
     [SerializeField] private float yawSpeed = 60f;
     [SerializeField] private float rollSpeed = 80f;
+    [SerializeField] private FlightExamManager examManager;
+    private bool takeoffTriggered = false;
 
     private Rigidbody rb;
 
@@ -28,6 +30,18 @@ public class FlightController : MonoBehaviour
 
     void Update()
     {
+        if (!takeoffTriggered && transform.position.y > 2f)
+        {
+            takeoffTriggered = true;
+            if (examManager !=null)
+            {
+                examManager.TakeOff();
+                Debug.Log("TAKEOFF DETECTED.");
+            }
+
+        }
+
+
         HandleRotation();
         HandleThrust();
     }
