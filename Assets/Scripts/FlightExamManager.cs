@@ -66,4 +66,21 @@ public class FlightExamManager : MonoBehaviour
         }
         Debug.Log("Landing rejected: conditions not met.");
     }
+
+    public void FailMission()
+    {
+        if (missionText != null)
+        {
+            missionText.text = "Mission Failed! Missile Hit.";
+        }
+        if (statusText != null)
+        {
+            statusText.text = "Return and try again.";
+        }
+        Debug.Log("MISSION FAILED");
+    }
+
+
+
+
 }
