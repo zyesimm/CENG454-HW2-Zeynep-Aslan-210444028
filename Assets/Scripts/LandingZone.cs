@@ -8,9 +8,12 @@ public class LandingZone : MonoBehaviour
     {
         Debug.Log("Something entered landing zone: " + other.name);
 
-        if (other.CompareTag("Player"))
+        Transform root = other.transform.root;
+
+        if (root.CompareTag("Player"))
         {
             Debug.Log("Player entered landing zone");
+            
             if (examManager == null)
             {
                 Debug.LogError("Exam manager is NULL!");

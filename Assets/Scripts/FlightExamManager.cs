@@ -5,6 +5,7 @@ public class FlightExamManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text statusText;
     [SerializeField] private TMP_Text missionText;
+    [SerializeField] private AudioSource successAudioSource;
 
     private bool hasTakenOff = false;
     private bool hasEnteredDangerZone = false;
@@ -56,6 +57,11 @@ public class FlightExamManager : MonoBehaviour
             statusText.text = "Safe Landing Successful.";
         }
         Debug.Log("MISSION COMPLETE");
+
+        if (successAudioSource != null)
+        {
+            successAudioSource.Play();
+        }
     }
 
     public void RejectLanding()
