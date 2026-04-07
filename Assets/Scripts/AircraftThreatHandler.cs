@@ -16,14 +16,15 @@ public class AircraftThreatHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Aircraft trigger entered by:" + other.name + " | Tag: " + other.tag);
-        if (other.CompareTag("Missile"))
+       
+        if (!other.CompareTag("Missile")) return;
         {
-            Debug.Log("MISSILE HIT THE AIRCRAFT");
+            
 
             if (hitAudioSource != null)
             {
                 hitAudioSource.Play();
+               
             }
 
             if (examManager != null)
@@ -46,6 +47,11 @@ public class AircraftThreatHandler : MonoBehaviour
             {
                 transform.position = respawnPoint.position;
                 transform.rotation = respawnPoint.rotation;
+            }
+            
+            if (examManager!=null)
+            {
+                examManager.ResetAfterFailure();
             }
         }
     }

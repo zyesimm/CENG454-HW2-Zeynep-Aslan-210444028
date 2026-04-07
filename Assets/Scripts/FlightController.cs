@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class FlightController : MonoBehaviour
 {
-    [SerializeField] private float forwardSpeed = 10f;
+    [SerializeField] private float forwardSpeed = 20f;
     [SerializeField] private float pitchSpeed = 45f;
     [SerializeField] private float yawSpeed = 60f;
     [SerializeField] private float rollSpeed = 80f;
@@ -30,17 +30,18 @@ public class FlightController : MonoBehaviour
 
     void Update()
     {
-        if (!takeoffTriggered && transform.position.y > 2f)
+        if (transform.position.y <= 2f)
+        {
+            takeoffTriggered=false;
+        }
+        if (!takeoffTriggered && transform.position.y >2f)
         {
             takeoffTriggered = true;
-            if (examManager !=null)
+            if (examManager!= null)
             {
                 examManager.TakeOff();
-                Debug.Log("TAKEOFF DETECTED.");
             }
-
         }
-
 
         HandleRotation();
         HandleThrust();

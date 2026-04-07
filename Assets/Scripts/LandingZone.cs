@@ -6,31 +6,30 @@ public class LandingZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Something entered landing zone: " + other.name);
 
         Transform root = other.transform.root;
 
-        if (root.CompareTag("Player"))
-        {
-            Debug.Log("Player entered landing zone");
+        if (!root.CompareTag("Player"))
+            return;
+        
             
-            if (examManager == null)
-            {
-                Debug.LogError("Exam manager is NULL!");
-                return;
-            }
-
-
-            if (examManager.CanLand())
-            {
-                Debug.Log("CAN LAND = TRUE");
-                examManager.CompleteMission();
-            }
-            else
-            {
-                Debug.Log("CAN LAND = FALSE");
-                examManager.RejectLanding();
-            }
+        if (examManager == null)
+        {
+            Debug.LogError("[LandingZone] FlightExamManager reference is missing.", this);
+            return;
         }
+
+
+        if (examManager.CanLand())
+        {
+                
+            examManager.CompleteMission();
+        }
+        else
+        {
+               
+            examManager.RejectLanding();
+        }
+        
     }
 }
