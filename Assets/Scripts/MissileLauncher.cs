@@ -4,6 +4,7 @@ public class MissileLauncher : MonoBehaviour
 {
     [SerializeField] private GameObject missilePrefab;
     [SerializeField] private Transform launchPoint;
+    [SerializeField] private AudioSource launchAudioSource;
 
     private GameObject activeMissile;
 
@@ -26,6 +27,12 @@ public class MissileLauncher : MonoBehaviour
         }
 
         activeMissile = Instantiate(missilePrefab, launchPoint.position, launchPoint.rotation);
+                if (launchAudioSource != null)
+                
+        {
+            launchAudioSource.Play();
+            Debug.Log("LAUNCH AUDIO PLAYED");
+        }
 
         Debug.Log("MISSILE CREATED");
 
@@ -51,4 +58,5 @@ public class MissileLauncher : MonoBehaviour
             activeMissile = null;
         }
     }
+    
 }
