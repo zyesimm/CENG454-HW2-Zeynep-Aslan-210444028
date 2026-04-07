@@ -17,14 +17,19 @@ public class DangerZoneController : MonoBehaviour
 
         playerInsideZone = true;
 
-        if (examManager != null)
+        if (activeCountdown != null)
+        {
+            StopCoroutine(activeCountdown);
+            activeCountdown=null;
+        }
+        if (examManager!=null)
         {
             examManager.EnterDangerZone();
         }
 
-        if (activeCountdown == null && missileLauncher != null)
-        {
-            activeCountdown = StartCoroutine(MissileCountdown(collision.transform));
+        if (missileLauncher!=null)
+        {activeCountdown= StartCoroutine(MissileCountdown(collision.transform));
+
         }
     }
 
@@ -32,31 +37,31 @@ public class DangerZoneController : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
         if (!playerInsideZone) return;
-
+ 
         playerInsideZone = false;
 
-        if (examManager != null)
-        {
-            examManager.ExitDangerZone();
-        }
-
-        if (activeCountdown != null)
-        {
-            StopCoroutine(activeCountdown);
-            activeCountdown = null;
-        }
-
-        if (missileLauncher != null)
-        {
-            missileLauncher.DestroyActiveMissile();
-        }
+    if (activeCountdown != null)
+    {
+        StopCoroutine(activeCountdown);
+        activeCountdown = null;
     }
+
+    if (missileLauncher != null)
+    {
+        missileLauncher.DestroyActiveMissile();
+    }
+
+    if (examManager != null && !examManager.IsMissionFailed())
+    {
+        examManager.ExitDangerZone();
+    }
+}
 
     private IEnumerator MissileCountdown(Transform target)
     {
         yield return new WaitForSeconds(missileDelay);
 
-        if (playerInsideZone && missileLauncher != null)
+        if (playerInsideZone && missileLauncher != null && target !=null) 
         {
             missileLauncher.Launch(target);
         }

@@ -17,7 +17,7 @@ public class AircraftThreatHandler : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
        
-        if (other.CompareTag("Missile"))
+        if (!other.CompareTag("Missile")) return;
         {
             
 
@@ -47,6 +47,11 @@ public class AircraftThreatHandler : MonoBehaviour
             {
                 transform.position = respawnPoint.position;
                 transform.rotation = respawnPoint.rotation;
+            }
+            
+            if (examManager!=null)
+            {
+                examManager.ResetAfterFailure();
             }
         }
     }

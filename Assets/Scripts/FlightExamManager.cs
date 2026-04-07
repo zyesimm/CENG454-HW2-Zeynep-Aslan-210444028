@@ -23,7 +23,7 @@ public class FlightExamManager : MonoBehaviour
 
     public void TakeOff()
     {
-        if (hasTakenOff) return;
+        if (hasTakenOff || missionComplete || missionFailed) return;
 
         hasTakenOff = true;
         UpdateUI();
@@ -35,6 +35,7 @@ public class FlightExamManager : MonoBehaviour
         if (missionComplete || missionFailed) return;
 
         hasEnteredDangerZone = true;
+        threatCleared = false;
 
         if (statusText != null)
         {
@@ -52,11 +53,10 @@ public class FlightExamManager : MonoBehaviour
     public void ExitDangerZone()
     {
         if (missionComplete || missionFailed) return;
-
-        if (hasEnteredDangerZone)
-        {
-            threatCleared = true;
-        }
+        if (!hasEnteredDangerZone) return;
+        
+        threatCleared = true;
+        
 
         if (statusText != null)
         {
@@ -161,11 +161,13 @@ public class FlightExamManager : MonoBehaviour
 
         if (statusText != null)
         {
-            statusText.text = "Return to base and try again.";
+            statusText.text = "Aircraft destroyed. Respawn and take off again.";
         }
 
         
     }
+
+    
 
     private void UpdateUI()
     {
@@ -209,5 +211,36 @@ public class FlightExamManager : MonoBehaviour
             if (missionText != null) missionText.text = "Objective: Return and land safely.";
             if (statusText != null) statusText.text = "Threat cleared.";
         }
+
     }
-}
+
+    public void ResetAfterFailure()
+    {
+        hasTakenOff=false;
+        missionFailed=false;
+        missionComplete=false;
+        hasEnteredDangerZone=false;
+        threatCleared=false;
+
+        UpdateUI();
+    }
+    public bool IsMissionFailed()
+    {
+        return missionFailed;
+    }
+
+    public bool IsMissionComplete()
+    {
+        return missionComplete;
+    }
+
+
+
+
+
+
+
+
+
+
+    }

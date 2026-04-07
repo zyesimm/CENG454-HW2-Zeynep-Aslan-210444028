@@ -30,17 +30,18 @@ public class FlightController : MonoBehaviour
 
     void Update()
     {
-        if (!takeoffTriggered && transform.position.y > 2f)
+        if (transform.position.y <= 2f)
+        {
+            takeoffTriggered=false;
+        }
+        if (!takeoffTriggered && transform.position.y >2f)
         {
             takeoffTriggered = true;
-            if (examManager !=null)
+            if (examManager!= null)
             {
                 examManager.TakeOff();
-                
             }
-
         }
-
 
         HandleRotation();
         HandleThrust();
