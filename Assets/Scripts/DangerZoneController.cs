@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+
 public class DangerZoneController : MonoBehaviour
 {
     [SerializeField] private FlightExamManager examManager;
@@ -7,48 +8,59 @@ public class DangerZoneController : MonoBehaviour
     [SerializeField] private float missileDelay = 5f;
 
     private Coroutine activeCountdown;
+    private bool playerInsideZone = false;
 
     private void OnTriggerEnter(Collider collision)
     {
-    if (collision.CompareTag("Player"))
-    {
-        Debug.Log("Player entered danger zone");
-        examManager.EnterDangerZone();
+        if (!collision.CompareTag("Player")) return;
+        if (playerInsideZone) return;
 
-        if (activeCountdown == null)
+        playerInsideZone = true;
+
+        if (examManager != null)
+        {
+            examManager.EnterDangerZone();
+        }
+
+        if (activeCountdown == null && missileLauncher != null)
         {
             activeCountdown = StartCoroutine(MissileCountdown(collision.transform));
         }
     }
-}
+
     private void OnTriggerExit(Collider collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            Debug.Log("Player exited danger zone");
-            examManager.ExitDangerZone();
+        if (!collision.CompareTag("Player")) return;
+        if (!playerInsideZone) return;
 
-            if (activeCountdown != null)
-            {
-                StopCoroutine(activeCountdown);
-                activeCountdown = null;
-            }
-            if (missileLauncher != null)
-            {
-                missileLauncher.DestroyActiveMissile();
-            }
+        playerInsideZone = false;
+
+        if (examManager != null)
+        {
+            examManager.ExitDangerZone();
+        }
+
+        if (activeCountdown != null)
+        {
+            StopCoroutine(activeCountdown);
+            activeCountdown = null;
+        }
+
+        if (missileLauncher != null)
+        {
+            missileLauncher.DestroyActiveMissile();
         }
     }
 
     private IEnumerator MissileCountdown(Transform target)
     {
         yield return new WaitForSeconds(missileDelay);
-        Debug.Log("MISSILE SHOULD LAUNCH NOW");
 
-        if (missileLauncher != null)
+        if (playerInsideZone && missileLauncher != null)
         {
             missileLauncher.Launch(target);
         }
+
         activeCountdown = null;
     }
 }

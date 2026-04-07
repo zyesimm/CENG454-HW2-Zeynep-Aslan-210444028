@@ -10,7 +10,7 @@ public class MissileLauncher : MonoBehaviour
 
     public GameObject Launch(Transform target)
     {
-        Debug.Log("LAUNCH FUNCTION CALLED");
+        
 
         if (activeMissile != null) return null;
 
@@ -31,10 +31,10 @@ public class MissileLauncher : MonoBehaviour
                 
         {
             launchAudioSource.Play();
-            Debug.Log("LAUNCH AUDIO PLAYED");
+           
         }
 
-        Debug.Log("MISSILE CREATED");
+        
 
         MissileHoming homing = activeMissile.GetComponent<MissileHoming>();
 

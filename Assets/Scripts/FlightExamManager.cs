@@ -27,7 +27,7 @@ public class FlightExamManager : MonoBehaviour
 
         hasTakenOff = true;
         UpdateUI();
-        Debug.Log("TAKE OFF REGISTERED");
+        
     }
 
     public void EnterDangerZone()
@@ -46,7 +46,7 @@ public class FlightExamManager : MonoBehaviour
             missionText.text = "Objective: Survive the missile threat and escape the zone.";
         }
 
-        Debug.Log("ENTERED DANGER ZONE");
+        
     }
 
     public void ExitDangerZone()
@@ -68,22 +68,14 @@ public class FlightExamManager : MonoBehaviour
             missionText.text = "Objective: Return and land safely.";
         }
 
-        Debug.Log("EXITED DANGER ZONE / THREAT CLEARED");
+        
     }
 
     public bool CanLand()
     {
-        bool canLand = hasTakenOff && hasEnteredDangerZone && threatCleared && !missionComplete && !missionFailed;
+        return hasTakenOff && hasEnteredDangerZone && threatCleared && !missionComplete && !missionFailed;
 
-        Debug.Log("CanLand check:");
-        Debug.Log("hasTakenOff: " + hasTakenOff);
-        Debug.Log("hasEnteredDangerZone: " + hasEnteredDangerZone);
-        Debug.Log("threatCleared: " + threatCleared);
-        Debug.Log("missionComplete: " + missionComplete);
-        Debug.Log("missionFailed: " + missionFailed);
-        Debug.Log("canLand: " + canLand);
 
-        return canLand;
     }
 
     public void CompleteMission()
@@ -107,7 +99,7 @@ public class FlightExamManager : MonoBehaviour
             successAudioSource.Play();
         }
 
-        Debug.Log("MISSION COMPLETE");
+       
     }
 
     public void RejectLanding()
@@ -151,7 +143,7 @@ public class FlightExamManager : MonoBehaviour
             }
         }
 
-        Debug.Log("LANDING REJECTED");
+      
     }
 
     public void FailMission()
@@ -170,7 +162,7 @@ public class FlightExamManager : MonoBehaviour
             statusText.text = "Return to base and try again.";
         }
 
-        Debug.Log("MISSION FAILED");
+        
     }
 
     private void UpdateUI()

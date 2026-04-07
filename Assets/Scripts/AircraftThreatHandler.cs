@@ -16,10 +16,10 @@ public class AircraftThreatHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Aircraft trigger entered by:" + other.name + " | Tag: " + other.tag);
+       
         if (other.CompareTag("Missile"))
         {
-            Debug.Log("MISSILE HIT THE AIRCRAFT");
+            
 
             if (hitAudioSource != null)
             {
