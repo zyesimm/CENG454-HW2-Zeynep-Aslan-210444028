@@ -24,6 +24,7 @@ public class AircraftThreatHandler : MonoBehaviour
             if (hitAudioSource != null)
             {
                 hitAudioSource.Play();
+               
             }
 
             if (examManager != null)
